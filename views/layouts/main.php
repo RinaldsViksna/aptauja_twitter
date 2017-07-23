@@ -38,7 +38,11 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Tweets', 'url' => ['/tweet/index']],
+            ['label' => 'Tweetlist', 'url' => ['/tweetlist/index']],
+            ['label' => 'Sentiments', 'url' => ['/sentiment/index']],
+            ['label' => 'Users', 'url' => ['/user/index']],
+            ['label' => 'Evaluations', 'url' => ['/evaluation/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/user/login']]
             ) : (
