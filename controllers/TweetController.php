@@ -55,6 +55,17 @@ class TweetController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
+    /**
+     * Display single Tweet model for evaluation
+     * If no $id given, display random Tweet
+     * @param unknown $id
+     */
+    public function actionRate($id = null){
+        return $this->render('evaluate', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Tweet model.

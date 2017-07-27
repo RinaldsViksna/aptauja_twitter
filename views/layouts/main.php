@@ -39,7 +39,7 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Tweets', 'url' => ['/tweet/index']],
-            ['label' => 'Tweetlist', 'url' => ['/tweetlist/index']],
+//             ['label' => 'Tweetlist', 'url' => ['/tweetlist/index']],
             ['label' => 'Sentiments', 'url' => ['/sentiment/index']],
             ['label' => 'Users', 'url' => ['/user/index']],
             ['label' => 'Evaluations', 'url' => ['/evaluation/index']],

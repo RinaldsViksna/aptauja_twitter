@@ -20,11 +20,12 @@ class UserController extends Controller
      * @param string $name
      * @param string $password
      * @param string $role
+     * example use: ./yii user/register Admin 654321
      */
     public function actionRegister($name, $password)
     {
         $model = new User();
-        $model->password = User::cryptPassword($password);
+        $model->password_hash = User::cryptPassword($password);
         $model->name = $name;
         $model->role = "admin";
         if ($model->save())

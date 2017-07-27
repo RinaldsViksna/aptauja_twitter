@@ -11,7 +11,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $name
- * @property string $password
+//  * @property string $password
  * @property string $password_hash
  * @property integer $birth_year
  * @property string $education
@@ -19,6 +19,7 @@ use yii\web\IdentityInterface;
  * @property string $role
  *
  * @property Evaluations[] $evaluations
+ * @property string $username
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -84,7 +85,7 @@ class User extends ActiveRecord implements IdentityInterface
 	 * @param string $name
 	 * @return User
 	 */
-	public static function findByEmail($name)
+	public static function findByName($name)
 	{
 	    return static::findOne(['name' => $name]);
 	}
@@ -112,12 +113,16 @@ class User extends ActiveRecord implements IdentityInterface
 	
 	public function validatePassword ($password)
 	{
-	    return $this->password == User::cryptPassword($password);
+	    return $this->password_hash== User::cryptPassword($password);
 	}
 	
 	public function getRole()
 	{
 	    return $this->role;
+	}
+	
+	public function getUsername(){
+	    return $this->name;
 	}
 	
 	/**
@@ -129,6 +134,7 @@ class User extends ActiveRecord implements IdentityInterface
 	{
 		$this->password_hash = Yii::$app->security->generatePasswordHash($password);
 	}
+
 	
 	/**
 	 * Generates "remember me" authentication key
