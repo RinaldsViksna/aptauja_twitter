@@ -52,8 +52,7 @@ class m170421_053827_tweet_table extends Migration
 		$this->batchInsert('sentiments', ['id','sentiment'], [
 		    [1, 'Positive'],
 		    [2, 'Negative'],
-		    [3, 'Neutral'],
-		    [4, 'Unknown']
+		    [3, 'Neutral']
 		]);
 
 	}

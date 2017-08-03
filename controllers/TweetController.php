@@ -10,18 +10,44 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Sentiment;
 use app\models\Evaluation;
+use yii\filters\AccessControl;
 
 /**
  * TweetController implements the CRUD actions for Tweet model.
  */
-class TweetController extends Controller
-{
+class TweetController extends Controller {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
+    public function behaviors() {
+        return [ 
+            'access' => [ 
+                'class' => AccessControl::className (),
+                'rules' => [
+                    [
+                        'actions' => [ 
+                            'create',
+                            'delete',
+                            'update' 
+                        ],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_ADMIN);
+                        } 
+                    ],
+                    [ 
+                        'actions' => [ 
+                            'index',
+                            'view',
+                            'rate'
+                        ],
+                        'allow' => true,
+                        'roles' => [
+                            '?'
+                        ] 
+                    ] 
+                ] 
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

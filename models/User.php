@@ -23,6 +23,8 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+    const ROLE_USER = "user";
+    const ROLE_ADMIN = "admin";
     /**
      * @inheritdoc
      */
@@ -39,6 +41,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['name', 'password_hash'], 'required'],
             [['birth_year'], 'integer'],
+            [['role'], 'default', 'value' => ROLE_USER],
             [['name', 'password_hash', 'education', 'auth_key', 'role'], 'string', 'max' => 255],
             ['name', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Šis lietotājvārds ir aizņemts.'],//Yii::t('app/user', 'Šis lietotājvārds ir aizņemts.')],
         		
@@ -73,7 +76,7 @@ class User extends ActiveRecord implements IdentityInterface
 	{
 	    return [
 	        'user' => Yii::t('app/user', 'Lietotājs'),
-	        'manager' => Yii::t('app/user', 'Administrators'),
+	        'admin' => Yii::t('app/user', 'Administrators'),
 	    ];
 	}
 	

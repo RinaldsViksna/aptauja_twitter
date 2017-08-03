@@ -8,18 +8,35 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * SentimentController implements the CRUD actions for Sentiment model.
  */
-class SentimentController extends Controller
-{
+class SentimentController extends Controller {
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
+    public function behaviors() {
+        return [ 
+            'access' => [ 
+                'class' => AccessControl::className (),
+                'rules' => [ 
+                    [ 
+                        'actions' => [ 
+                            'index',
+                            'view',
+                            'create',
+                            'delete',
+                            'update' 
+                        ],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_ADMIN);
+                        } 
+                    ] 
+                ] 
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
