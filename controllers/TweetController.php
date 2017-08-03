@@ -8,6 +8,8 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Sentiment;
+use app\models\Evaluation;
 
 /**
  * TweetController implements the CRUD actions for Tweet model.
@@ -59,11 +61,41 @@ class TweetController extends Controller
     /**
      * Display single Tweet model for evaluation
      * If no $id given, display random Tweet
-     * @param unknown $id
+     * @param int $id tweet id, for rating
+     * @param int $sentiment - sentiment id, for rating
+     * @param bool $latvian - if false, tweet is not in latvian language
      */
-    public function actionRate($id = null){
+    public function actionRate($id = null, $sentiment = null, $latvian = true){
+        
+        
+        if ($id){
+            $model = $this->findModel($id);
+        }
+        if ($sentiment){
+            $sentiment = Sentiment::findOne($sentiment);
+        }
+        $message = "";
+        if ($sentiment && $model){
+            $evaluation = new Evaluation([
+                'tweet_id' => $model->id,
+                'sentiment_id' => $sentiment->id,
+            ]);
+            $evaluation->is_latvian = $latvian ? 1 : 0;
+            $evaluation->user_id = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
+            $evaluation->session = Yii::$app->session->id;
+            $message = $evaluation->save() ? "Paldies!" : "Novērtejumu saglabāt neizdevās";
+        }
+        // AJAX
+        if (Yii::$app->request->isAjax){
+            return $this->renderPartial('evaluate',[
+                'model' => Tweet::getRandom(),
+                'message'=> $message,
+            ]);
+        }
+        
         return $this->render('evaluate', [
-            'model' => $this->findModel($id),
+            'model' => Tweet::getRandom(),
+            'message'=> $message,
         ]);
     }
 

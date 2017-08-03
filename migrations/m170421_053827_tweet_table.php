@@ -21,7 +21,8 @@ class m170421_053827_tweet_table extends Migration
 				'name' => $this->string ( 255 )->notNull (),
 				'password_hash' => $this->string ( 255 )->notNull (),
 				'birth_year' => $this->integer ( 8 ),
-				'education' => $this->string ( 255 ) 
+				'education' => $this->string ( 255 ),
+		        'role'=>$this->string(255)
 		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
 		
 		
@@ -32,8 +33,10 @@ class m170421_053827_tweet_table extends Migration
 		
 		
 		$this->createTable ( 'evaluations', [ 
+		        'id'=>$this->bigPrimaryKey(),
 				'tweet_id' => $this->bigInteger( 32 )->notNull (),
-				'user_id' => $this->bigInteger( 32 )->notNull (),
+				'user_id' => $this->bigInteger( 32 ),
+		        'session' => $this->string(255),
 				'sentiment_id' => $this->bigInteger( 32 )->notNull (),
 				'is_latvian' => $this->boolean ()->notNull ()->defaultValue ( true ) 
 		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
