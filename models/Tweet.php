@@ -6,6 +6,8 @@ use Yii;
 
 /**
  * This is the model class for table "tweets".
+ * Table tweets contains tweets ready for evaluation. Tweets have only 
+ * basic attributes: id, text, link to user profile
  *
  * @property integer $id
  * @property string $text

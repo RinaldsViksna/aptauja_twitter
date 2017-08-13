@@ -27,7 +27,7 @@ class UserController extends Controller
         $model = new User();
         $model->password_hash = User::cryptPassword($password);
         $model->name = $name;
-        $model->role = "admin";
+        $model->role = User::ROLE_ADMIN;
         if ($model->save())
         {
         	echo "User created\r\n";

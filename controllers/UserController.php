@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use yii\filters\AccessControl;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -25,11 +27,12 @@ class UserController extends Controller {
                 'rules' => [ 
                     [
                         'actions' => [ 
-                            'login' 
+                            'login',
+                        	'create'
                         ],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->getUser ()->isGuest;
+                            return Yii::$app->getUser()->isGuest;
                         },
                         'denyCallback' => function ($rule, $action) {
                             return $this->redirect ( Url::toRoute ( [ 
@@ -51,6 +54,16 @@ class UserController extends Controller {
                             return (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == "admin");
                         } 
                     ],
+                    [
+                        'actions' => [
+                            'update',
+                            'view'
+                        ],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return (Yii::$app->user->identity && (Yii::$app->user->identity->getId() == Yii::$app->request->get('id')));
+                        }
+                        ],
                     [
                         'actions' => [ 
                             'login',
@@ -129,16 +142,33 @@ class UserController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    public function actionCreate() {
+        $model = new User ();
+        
+        if (Yii::$app->request->isAjax) {
+            $model->load ( Yii::$app->request->post () );
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate ( $model );
+        }
+        $model->load ( Yii::$app->request->post () );
+        $model->password_hash = User::cryptPassword ( $model->password );
+        // $model->setPassword($model->password);
+        $model->role = User::ROLE_USER;
+        
+        if (Yii::$app->user->identity && $model->save ()) {
+            return $this->redirect ( [ 
+                'view',
+                'id' => $model->id 
+            ] );
+        } elseif ($model->save ()) {
+            Yii::$app->user->login ( $model, 3600 * 24 * 30 );
+            return $this->redirect ( [ 
+                'update' 
+            ] );
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            return $this->render ( 'create', [ 
+                'model' => $model 
+            ] );
         }
     }
 
@@ -151,7 +181,13 @@ class UserController extends Controller {
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        
+        if (Yii::$app->request->isAjax) {
+            $model->load ( Yii::$app->request->post () );
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate ( $model );
+        }
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -170,7 +206,7 @@ class UserController extends Controller {
             if (isset(Yii::$app->request->post()["User"]["password"]) &&
                     \Yii::$app->params["salt"] != substr(Yii::$app->request->post()["User"]["password"], 0, strlen(\Yii::$app->params["salt"] )) )
             {
-                $model->password = User::cryptPassword($model->password);
+                $model->password_hash = User::cryptPassword($model->password);
             }
             
             $model->save();

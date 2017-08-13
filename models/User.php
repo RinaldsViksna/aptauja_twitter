@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  *
  * @property Evaluations[] $evaluations
  * @property string $username
+ * @property string $password
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -41,8 +42,8 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['name', 'password_hash'], 'required'],
             [['birth_year'], 'integer'],
-            [['role'], 'default', 'value' => ROLE_USER],
-            [['name', 'password_hash', 'education', 'auth_key', 'role'], 'string', 'max' => 255],
+            [['role'], 'default', 'value' => User::ROLE_USER],
+            [['name','password', 'password_hash', 'education', 'auth_key', 'role'], 'string', 'max' => 255],
             ['name', 'unique', 'targetClass' => '\app\models\User', 'message' => 'Šis lietotājvārds ir aizņemts.'],//Yii::t('app/user', 'Šis lietotājvārds ir aizņemts.')],
         		
         ];
@@ -53,12 +54,12 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function attributeLabels() {
         return [ 
-            'id' => 'ID',//Yii::t ( 'app/user', 'ID' ),
-            'name' => 'Lietotājvārds', //Yii::t ( 'app/user', 'Lietotājvārds' ),
-            'password' => 'Parole', //Yii::t ( 'app/user', 'Parole' ),
+            'id' => Yii::t ( 'app/user', 'ID' ),
+            'name' => Yii::t ( 'app/user', 'Lietotājvārds' ),
+            'password' => Yii::t( 'app/user', 'Parole' ),
             // 'password_hash' => 'Password Hash',
-            'birth_year' => 'Dzimšanas gads',
-            'education' => 'Izglītība' 
+			'birth_year' => Yii::t( 'app/user', 'Dzimšanas gads'),
+        	'education' => Yii::t( 'app/user', 'Izglītība')
         ];
     }
 	
@@ -129,25 +130,30 @@ class User extends ActiveRecord implements IdentityInterface
 	}
 	
 	/**
-	 * Generates password hash from password and sets it to the model
-	 *
-	 * @param string $password
-	 */
-	public function setPassword($password)
-	{
-		$this->password_hash = Yii::$app->security->generatePasswordHash($password);
-	}
-
-	
-	/**
 	 * Generates "remember me" authentication key
 	 */
 	public function generateAuthKey()
 	{
 		$this->auth_key = Yii::$app->security->generateRandomString();
 	}
+
+	/**
+	 * get temporary variable password
+	 */
+	public function getPassword()
+	{
+		return "";
+	}
 	
-	public static function cryptPassword ($password)
+	/**
+	 * set temporary variable password
+	 */
+	public function setPassword($password)
+	{
+		$this->password = $password;
+	}
+	
+	public static function cryptPassword($password)
 	{
 	    if (!Yii::$app->params["salt"])
 	    {

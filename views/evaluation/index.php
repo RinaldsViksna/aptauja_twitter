@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'tweet_id',
             'user_id',
-            'sentiment_id:datetime',
+            'sentiment_id',
             'is_latvian',
             // 'session',
 

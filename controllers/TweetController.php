@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\Sentiment;
 use app\models\Evaluation;
 use yii\filters\AccessControl;
+use app\models\User;
 
 /**
  * TweetController implements the CRUD actions for Tweet model.
@@ -26,25 +27,39 @@ class TweetController extends Controller {
                 'rules' => [
                     [
                         'actions' => [ 
+                        	'index',
+                        	'view',
                             'create',
                             'delete',
-                            'update' 
+                            'update',
+                        	'rate',
                         ],
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
                             return (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_ADMIN);
                         } 
                     ],
-                    [ 
+                    [
                         'actions' => [ 
-                            'index',
-                            'view',
+//                             'index',
+//                             'view',
                             'rate'
                         ],
                         'allow' => true,
                         'roles' => [
                             '?'
                         ] 
+                    ],
+                    [
+                    		'actions' => [
+//                     				'index',
+//                     				'view',
+                    				'rate'
+                    		],
+                    		'allow' => true,
+                    		'matchCallback' => function ($rule, $action) {
+                    			return (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_USER);
+                    		} 
                     ] 
                 ] 
             ],
@@ -93,24 +108,25 @@ class TweetController extends Controller {
      */
     public function actionRate($id = null, $sentiment = null, $latvian = true){
         
-        
-        if ($id){
-            $model = $this->findModel($id);
-        }
         if ($sentiment){
             $sentiment = Sentiment::findOne($sentiment);
         }
         $message = "";
-        if ($sentiment && $model){
+        if ($id){
+        	$model = $this->findModel($id);
             $evaluation = new Evaluation([
                 'tweet_id' => $model->id,
-                'sentiment_id' => $sentiment->id,
+                'sentiment_id' => $sentiment ? $sentiment->id : null,
             ]);
             $evaluation->is_latvian = $latvian ? 1 : 0;
             $evaluation->user_id = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
             $evaluation->session = Yii::$app->session->id;
-            $message = $evaluation->save() ? "Paldies!" : "Novērtejumu saglabāt neizdevās";
-        }
+            
+            $message = $evaluation->save() ? "Paldies par vērtējumu!" : "Novērtejumu saglabāt neizdevās";
+            //print_r($evaluation->getErrors());
+            //exit();
+        } 
+
         // AJAX
         if (Yii::$app->request->isAjax){
             return $this->renderPartial('evaluate',[

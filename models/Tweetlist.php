@@ -5,7 +5,8 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "tweetlist".
+ * This is the model class for table "tweetlist". 
+ * Tweetlist table contains raw tweets downloaded from twitter. 
  *
  * @property integer $id
  * @property string $text

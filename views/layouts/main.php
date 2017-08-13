@@ -8,9 +8,45 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
 
 AppAsset::register($this);
+
+$items = [
+		['label' => Yii::t('app', 'Galvenā'), 'url' => ['/site/index']],
+		['label' => Yii::t('app', 'Par projektu'), 'url' => ['/site/about']],
+];
+if (Yii::$app->getUser()->isGuest){
+	$items[]=['label' => Yii::t('app', 'Reģistrēties'), 'url' => ['/user/create']];
+	$items[]=['label' => Yii::t('app', 'Ienākt'), 'url' => ['/user/login']];
+}
+if (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_USER) {
+    $items [] = [ 'label' => Yii::t ( 'app', 'Profils' ),'url' => ['/user/update','id'=>Yii::$app->getUser()->identity->getId()] ];
+    $items [] = '<li>' . Html::beginForm ( ['/user/logout' ], 'post' ) . Html::submitButton ( Yii::t ( 'app', 'Logout' ) . '(' . Yii::$app->user->identity->username . ')',	['class' => 'btn btn-link logout'])
+			. Html::endForm()
+			. '</li>';
+}
+if (Yii::$app->user->identity && Yii::$app->user->identity->getRole () == User::ROLE_ADMIN){
+	$items[]= ['label' => Yii::t('app', 'Tweets'), 'url' => ['/tweet/index']];
+	//$items[]= ['label' => 'Tweetlist'), 'url' => ['/tweetlist/index']];
+	$items[]= ['label' => Yii::t('app', 'Sentiments'), 'url' => ['/sentiment/index']];
+	$items[]= ['label' => Yii::t('app', 'Users'), 'url' => ['/user/index']];
+	$items[]= ['label' => Yii::t('app', 'Evaluations'), 'url' => ['/evaluation/index']];
+	$items[]= '<li>'
+		. Html::beginForm(['/user/logout'], 'post')
+		. Html::submitButton(
+				Yii::t('app', 'Logout') . '(' . Yii::$app->user->identity->username . ')',
+			['class' => 'btn btn-link logout']
+			)
+			. Html::endForm()
+			. '</li>';
+}
+
+if (class_exists('yii\debug\Module')) {
+    $this->off(\yii\web\View::EVENT_END_BODY, [\yii\debug\Module::getInstance(), 'renderToolbar']);
+}
 ?>
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -27,35 +63,15 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
+//         'brandLabel' => 'My Company',
+//         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Tweets', 'url' => ['/tweet/index']],
-//             ['label' => 'Tweetlist', 'url' => ['/tweetlist/index']],
-            ['label' => 'Sentiments', 'url' => ['/sentiment/index']],
-            ['label' => 'Users', 'url' => ['/user/index']],
-            ['label' => 'Evaluations', 'url' => ['/evaluation/index']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/user/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/user/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $items,
     ]);
     NavBar::end();
     ?>
@@ -70,7 +86,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Rinalds Vīksna <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

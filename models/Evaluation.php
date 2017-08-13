@@ -34,7 +34,7 @@ class Evaluation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tweet_id', 'sentiment_id'], 'required'],
+            [['tweet_id'], 'required'],
             [['tweet_id', 'user_id', 'sentiment_id', 'is_latvian'], 'integer'],
             [['session'], 'string', 'max' => 255],
             [['sentiment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sentiment::className(), 'targetAttribute' => ['sentiment_id' => 'id']],
