@@ -19,7 +19,7 @@ class LessAsset extends AssetBundle
     
     public $sourcePath = '@app/assets/less';
     public $css = [
-        'style.less'
+        //'style.less'//Commented out to deploy to hostinger.com // Write directly to style.css
     ];
 }
 

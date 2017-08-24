@@ -1,0 +1,5 @@
+1. Apply migration
+2. Create Tweets from Tweetlist for rating, example:
+	./yii tweetlist/transform 884132677439426560
+3. Create at least one Admin user, example:
+	./yii user/register Admin admin

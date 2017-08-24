@@ -13,8 +13,8 @@ use app\models\User;
 AppAsset::register($this);
 
 $items = [
-		['label' => Yii::t('app', 'Galvenā'), 'url' => ['/site/index']],
-		['label' => Yii::t('app', 'Par projektu'), 'url' => ['/site/about']],
+		//['label' => Yii::t('app', 'Galvenā'), 'url' => ['/site/index']],
+		//['label' => Yii::t('app', 'Par projektu'), 'url' => ['/site/about']],
 ];
 if (Yii::$app->getUser()->isGuest){
 	$items[]=['label' => Yii::t('app', 'Reģistrēties'), 'url' => ['/user/create']];
@@ -61,10 +61,14 @@ if (class_exists('yii\debug\Module')) {
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+
     <?php
+
     NavBar::begin([
-//         'brandLabel' => 'My Company',
-//         'brandUrl' => Yii::$app->homeUrl,
+//        [   'label' => "Novērtē tvītu", 'url' => ['/site/index'],'options'=>['class'=>'center header-title']],
+//         'brandLabel' => Html::tag('h1','Novērtē tvītu', ['class'=>'center header-title']),
+        'brandLabel' => 'Novērtē tvītu',
+        'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -82,6 +86,7 @@ if (class_exists('yii\debug\Module')) {
         ]) ?>
         <?= $content ?>
     </div>
+
 </div>
 
 <footer class="footer">

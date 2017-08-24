@@ -47,25 +47,30 @@ class TweetlistController extends Controller
      * Check Tweetlist objects if they have been saved in Tweet objects
      * if not, save relevant data in Tweet object
      * Call using console:  ./yii tweetlist/transform 884132677439426560
+     * Skip retweeted ones (RT @R_Artamonovs:) and answers to some other tweet
      */
-    public function actionTransform($start = 0){
-        $start = (int)$start;
-        $c = 1;
-        $count = Tweetlist::find()->count("id > $start");
+    public function actionTransform( $add = 500){//$start = 0,
+//      $start = (int)$start;
+        $add = (int)$add;
+//      $c = 1;
+        $c = 0;
+//      $count = Tweetlist::find()->count("id > $start");
         $connection = Yii::$app->db;
-        $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." where id > {$start} order by id;" );
+//      $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." where id > {$start} order by id;" );
+        $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." order by id;" );
         $dataReader = $command->query ();
         $row = null;
         
-        while(($row = $dataReader->read()) !== false){
-            $c++;
-            if ($c%100==0){
-                print ($c . "/$count  " . $row['id'] . "\n");
-            }
+        while ((($row = $dataReader->read()) !== false) && ($c < $add)){
             
             $rawTweet = Tweetlist::findOne($row["id"]);
             
+            // Tvīts jau ir db, izlaižam
             if ($tweet = Tweet::findOne($row["id"])){
+                continue;
+            }
+            // Tvīts ir retweet , izlaižam
+            if (preg_match('/RT @.*?:/', $rawTweet->text)){
                 continue;
             }
             
@@ -77,7 +82,12 @@ class TweetlistController extends Controller
             $tweet->author_profile = $rawTweet->userUrl;
             
             if (!$tweet->save()){
-                print("save failed on id: ". $tweet->id);
+                print("save failed on id: ". $tweet->id."\n");
+            } else {
+                $c++;
+                if ($c%100==0){
+                    print ($c . "/$add  " . $row['id'] . "\n");
+                }
             }
         }
     }

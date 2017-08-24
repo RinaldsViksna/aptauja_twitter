@@ -50,9 +50,10 @@ class m170421_053827_tweet_table extends Migration
 		$this->addForeignKey ( "evaluations_sentiment_id", "evaluations", [ "sentiment_id" ], "sentiments", [ "id" ], "CASCADE", "CASCADE" );
 		
 		$this->batchInsert('sentiments', ['id','sentiment'], [
-		    [1, 'Positive'],
-		    [2, 'Negative'],
-		    [3, 'Neutral']
+		    [1, 'Pozitīva emocija'],
+		    [2, 'Negatīva emocija'],
+		    [3, 'Nav emociju'],
+		    [4, 'Tvīts ir nesaprotams']
 		]);
 
 	}

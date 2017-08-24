@@ -162,9 +162,11 @@ class UserController extends Controller {
             ] );
         } elseif ($model->save ()) {
             Yii::$app->user->login ( $model, 3600 * 24 * 30 );
-            return $this->redirect ( [ 
-                'update' 
-            ] );
+            return Yii::$app->runAction('tweet/rate');
+//             return $this->redirect ( [ 
+//                 'update',
+//                 'id'=>$model->id
+//             ] );
         } else {
             return $this->render ( 'create', [ 
                 'model' => $model 

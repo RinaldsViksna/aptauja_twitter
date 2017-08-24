@@ -113,3 +113,15 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+.jumbotron {
+  bacground-color: #F0F;
+}
+.center {
+  text-align: center;
+}
+.help{
+	padding: 20px 15px 20px 15px;
+}
+.header-title{
+	font-size: 2em;
+}
