@@ -12,14 +12,28 @@ $this->title = $model->id;
 <div class="tweet-eval center">
 
     <div class="row">
-   		<?= Html::a(Html::img(
+    	
+    	<div class="tweet-display">
+    	   		<?= Html::a(Html::img(
                 $model->author_pic,
                 ['alt'=>$model->author_name]), 
    		        $model->author_profile, ['class'=>"img-author",'target'=>'_blank']
-            )?>
-   		<div class="tweet-text">
-   		<?= Html::a($model->text,"https://twitter.com/statuses/".Html::encode($this->title),['target'=>'_blank']) ?>
-		</div>
+                )?>
+           		<div class="tweet-text">
+           		<?php 
+           		$text = $model->text;
+           		for($i = 0; $i < strlen($text); $i++)
+           		{
+           		    echo $text[$i]." " . ord($text[$i])."<br/>";
+           		}
+           		exit;
+           		echo Html::a($text,"https://twitter.com/statuses/".Html::encode($this->title),['target'=>'_blank']) ;
+           		?>
+        		</div>
+        		<div class="clearfix"></div>
+    	</div>
+    	
+
 	</div>
 	<div class="evaluation-buttons row">
 	<h3>Augstāk redzamajā tvītā ir izteikta...</h3>

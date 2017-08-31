@@ -125,3 +125,25 @@ a.desc:after {
 .header-title{
 	font-size: 2em;
 }
+.tweet-display{
+	width: 640px;
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	margin: auto;
+	padding: 5px;
+}
+.tweet-text{
+    font-size: 27px;
+    line-height: 32px;
+    letter-spacing: .01em;
+}
+.tweet-text a{
+	color: #111;
+}
+.img-author{
+	float:left;
+}
+.img-author img{
+    border-radius: 50%;
+
+}
