@@ -5,5 +5,5 @@ return [
     'dsn' => 'mysql:host=localhost;dbname=tweets',
     'username' => 'root',
     'password' => '654321',
-    'charset' => 'utf8',
+    'charset' => 'utf8mb4',
 ];

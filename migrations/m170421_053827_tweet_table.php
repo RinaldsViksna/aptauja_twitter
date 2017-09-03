@@ -12,7 +12,7 @@ class m170421_053827_tweet_table extends Migration
 				'author_name' => $this->string ( 255 ),
 				'author_profile' => $this->string ( 255 ),
 				'author_pic' => $this->string ( 255 ) 
-		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
+		], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB' );
 		
 		
 		$this->createTable ( 'users', [ 
@@ -23,13 +23,13 @@ class m170421_053827_tweet_table extends Migration
 				'birth_year' => $this->integer ( 8 ),
 				'education' => $this->string ( 255 ),
 		        'role'=>$this->string(255)
-		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
+		], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB' );
 		
 		
 		$this->createTable ( 'sentiments', [ 
     		    'id' => $this->bigPrimaryKey(),
 				'sentiment' => $this->string ( 255 )->notNull () 
-		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
+		], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB' );
 		
 		
 		$this->createTable ( 'evaluations', [ 
@@ -39,7 +39,7 @@ class m170421_053827_tweet_table extends Migration
 		        'session' => $this->string(255),
 				'sentiment_id' => $this->bigInteger( 32 ),
 				'is_latvian' => $this->boolean ()->notNull ()->defaultValue ( true ) 
-		], 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB' );
+		], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB' );
 		
 // 		$this->addPrimaryKey("tweets_pk", 'tweets', 'id');
 // 		$this->addPrimaryKey("users_pk", 'users', 'id');
@@ -52,7 +52,7 @@ class m170421_053827_tweet_table extends Migration
 		$this->batchInsert('sentiments', ['id','sentiment'], [
 		    [1, 'Pozitīva emocija'],
 		    [2, 'Negatīva emocija'],
-		    [3, 'Nav emociju'],
+		    [3, 'Neitrāls'],
 		    [4, 'Tvīts ir nesaprotams']
 		]);
 

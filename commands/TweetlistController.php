@@ -49,15 +49,15 @@ class TweetlistController extends Controller
      * Call using console:  ./yii tweetlist/transform 884132677439426560
      * Skip retweeted ones (RT @R_Artamonovs:) and answers to some other tweet
      */
-    public function actionTransform( $add = 500){//$start = 0,
-//      $start = (int)$start;
+    public function actionTransform( $add = 500, $start = 0){
+      $start = (int)$start;
         $add = (int)$add;
 //      $c = 1;
         $c = 0;
 //      $count = Tweetlist::find()->count("id > $start");
         $connection = Yii::$app->db;
-//      $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." where id > {$start} order by id;" );
-        $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." order by id;" );
+        $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." where id > {$start} order by id;" );
+//      $command = $connection->createCommand ( "select id from ". Tweetlist::tableName() ." order by id;" );
         $dataReader = $command->query ();
         $row = null;
         
@@ -80,7 +80,7 @@ class TweetlistController extends Controller
             $tweet->author_name = $rawTweet->username;
             $tweet->author_pic = $rawTweet->userImageUrl;
             $tweet->author_profile = $rawTweet->userUrl;
-            
+
             if (!$tweet->save()){
                 print("save failed on id: ". $tweet->id."\n");
             } else {

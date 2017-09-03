@@ -21,13 +21,13 @@ $this->title = $model->id;
                 )?>
            		<div class="tweet-text">
            		<?php 
-           		$text = $model->text;
-           		for($i = 0; $i < strlen($text); $i++)
-           		{
-           		    echo $text[$i]." " . ord($text[$i])."<br/>";
-           		}
-           		exit;
-           		echo Html::a($text,"https://twitter.com/statuses/".Html::encode($this->title),['target'=>'_blank']) ;
+            		$text = $model->text;
+//            		for($i = 0; $i < strlen($text); $i++)
+//            		{
+//            		    echo $text[$i]." " . ord($text[$i])."<br/>";
+//            		}
+//           		exit;
+               		echo Html::a($text,"https://twitter.com/statuses/".Html::encode($this->title),['target'=>'_blank']) ;
            		?>
         		</div>
         		<div class="clearfix"></div>
