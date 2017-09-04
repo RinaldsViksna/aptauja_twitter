@@ -145,5 +145,8 @@ a.desc:after {
 }
 .img-author img{
     border-radius: 50%;
-
+}
+.emoji{
+	height: 1.25em;
+    vertical-align: -0.2em;
 }

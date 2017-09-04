@@ -21,7 +21,11 @@ class AppAsset extends AssetBundle
         'css/site.css',
     ];
     public $js = [
+        /* https://github.com/twitter/twemoji */
+        "//twemoji.maxcdn.com/2/twemoji.min.js?2.3.0",
+        "js/site.js"
     ];
+    public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
     public $depends = [
         'yii\web\YiiAsset',
         'app\assets\LessAsset',
