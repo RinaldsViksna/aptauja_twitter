@@ -47,19 +47,19 @@ $this->title = $model->id;
     <div class="row help">
     	<div class="col-md-4 center">
     		<h2>Kas šī ir par vietni?</h2>
-    		<p>Šī vietne ir veltīta manam maģistra darbam. Darba mērķis ir izveidot mākslīgā intelekta sistēmu, kas spētu noteikt rakstītā teksta noskaņojumu. Lai izveidotu šādu sistēmu, ir nepieciešami apmācības piemēri. Katrs novērtētais tvīts ir šāds piemērs.
+    		<p>Šī vietne ir izveidota, lai apmācītu datoru noteikt teksta emocionālo noskaņu. Lai izveidotu sistēmu, kas to spēs, ir nepieciešami apmācības piemēri. Katrs novērtētais tvīts ir šāds piemērs. Jo vairāk apmācības piemēru izdosies savākt, jo labāk varēs apmācīt sistēmu. Tādēļ lūdzu novērtēt pēc iespējas lielāku tvītu skaitu!  </p>
     	</div>
     	<div class="col-md-4 center">
     		<h2>Kā novērtēt tvītu?</h2>
-    		<p>Izlasi tvītu un nospied pogu, kas vislabāk izsaka emocijas, ko tvīta rakstītājs ir domājis izteikt. Ir vairāki iespējamie novērtējumi:</p>
+    		<p>Izlasi tvītu un nospied pogu, kas vislabāk izsaka noskaņojumu, ko tvīta rakstītājs ir domājis izteikt. Ir vairāki iespējamie novērtējumi:</p>
     		<p>Pozitīvs - tvīts  izsaka pozitīvas emocijas.</p>
     		<p>Negatīvs - tvīts ir dusmīgs, drūms utml.</p>
-    		<p>Neitrāls - tvīts ir sausi fakti.</p>
+    		<p>Neitrāls - tvīts ir sausi fakti, vai emocija nav vērtējama pozitīvs-negatīvs griezumā.</p>
     		<p>Nesaprotams - nav saprotams, ko tvīta autors ir gribējis izteikt.</p>
     	</div>
     	<div class="col-md-4 center">
     		<h2>Kādēļ reģistrēties?</h2>
-    		<p>Reģistrēto lietotāju vērtējumi ir "ticamāki". Reģistrācija ļauj grupēt vērtējumus un izsekot, kā katrs lietotājs ir vērtējis tvītus. </p>
+    		<p>Lai reģistrētos pietiek norādīt lietotājvārdu un paroli. Reģistrēto lietotāju vērtējumi ir "ticamāki". Reģistrācija ļauj grupēt vērtējumus un izsekot, kā katrs lietotājs ir vērtējis tvītus. </p>
     	</div>
     </div>
 </div>

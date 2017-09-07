@@ -137,6 +137,11 @@ a.desc:after {
     line-height: 32px;
     letter-spacing: .01em;
 }
+.emoji{
+	width: 34px;
+	height: 1.25em;
+    vertical-align: -0.2em;
+}
 .tweet-text a{
 	color: #111;
 }
@@ -146,7 +151,25 @@ a.desc:after {
 .img-author img{
     border-radius: 50%;
 }
-.emoji{
-	height: 1.25em;
-    vertical-align: -0.2em;
+/* Pogām krāsu kodējums */
+.evaluation-buttons a:nth-child(2) {
+	background-color: green;
+}
+.evaluation-buttons a:nth-child(2):hover {
+	background-color: darkgreen;
+}
+.evaluation-buttons a:nth-child(3) {
+	background-color: red;
+}
+.evaluation-buttons a:nth-child(3):hover {
+	background-color: darkred;
+}
+.evaluation-buttons a:nth-child(4) {
+	background-color: darkgrey;
+}
+.evaluation-buttons a:nth-child(4):hover {
+	background-color: grey;
+}
+.evaluation-buttons a:nth-child(5) {
+	margin-left: 10px;
 }

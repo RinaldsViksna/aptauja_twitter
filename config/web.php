@@ -11,12 +11,14 @@ $config = [
     'language' => $language,
     
     'components' => [
-//         'urlManager' => [
-//             'class' => 'app\components\UrlManager',
-//             'enablePrettyUrl' => true,
-//             'showScriptName' => true,
-//             'rules' => require(__DIR__ . '/rules_'.$language.'.php'),
-//         ],
+        'urlManager' => [
+            'class' => '\yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => true,
+            //lai slēptu script name vajag pieeju htaccess: 
+            //https://stackoverflow.com/questions/41239858/pretty-url-is-not-working-in-yii2
+            'rules'=>[],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Lhg3l0lEacf7TQmqqB10AGeMGwEpo4lg',
@@ -61,14 +63,6 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
     ],
     'params' => $params,
 ];
