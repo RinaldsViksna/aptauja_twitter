@@ -67,7 +67,7 @@ if (class_exists('yii\debug\Module')) {
     NavBar::begin([
 //        [   'label' => "Novērtē tvītu", 'url' => ['/site/index'],'options'=>['class'=>'center header-title']],
 //         'brandLabel' => Html::tag('h1','Novērtē tvītu', ['class'=>'center header-title']),
-        'brandLabel' => 'Novērtē tvītu',
+        'brandLabel' => 'Novērtē citu tvītu ',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -91,7 +91,7 @@ if (class_exists('yii\debug\Module')) {
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Rinalds Vīksna <?= date('Y') ?></p>
+        <p class="pull-left"> Rinalds Vīksna, <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

@@ -173,3 +173,6 @@ a.desc:after {
 .evaluation-buttons a:nth-child(5) {
 	margin-left: 10px;
 }
+.btn-primary{
+	margin-right: 3px;
+}
