@@ -126,17 +126,23 @@ class TweetController extends Controller {
             //print_r($evaluation->getErrors());
             //exit();
         } 
-
-        // AJAX
+        $randomTweet = Tweet::getRandom();
+        
+        // ignore tweet if it is a reply, because wihtout context they are often hard to understand
+        while (substr( $randomTweet->text, 0, 1 ) === "@"){
+            $randomTweet = Tweet::getRandom();
+        }
+        
+        // Request was AJAX
         if (Yii::$app->request->isAjax){
             return $this->renderPartial('evaluate',[
-                'model' => Tweet::getRandom(),
+                'model' => $randomTweet,
                 'message'=> $message,
             ]);
         }
         
         return $this->render('evaluate', [
-            'model' => Tweet::getRandom(),
+            'model' => $randomTweet,
             'message'=> $message,
         ]);
     }
