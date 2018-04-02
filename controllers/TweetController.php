@@ -126,11 +126,36 @@ class TweetController extends Controller {
             //print_r($evaluation->getErrors());
             //exit();
         } 
-        $randomTweet = Tweet::getRandom();
-        
-        // ignore tweet if it is a reply, because wihtout context they are often hard to understand
-        while (substr( $randomTweet->text, 0, 1 ) === "@"){
+
+        // Get new tweet to display and do some checks on it
+        $show = false;
+        $count = 0;
+        while ($show == false){
             $randomTweet = Tweet::getRandom();
+            
+            $count ++;
+            // break loop if too many tweets are already rated
+            if ($count > 10000){
+                echo "Paldies par darbu!";
+                exit;
+            }
+            // ignore tweet if it is a reply, because wihtout context they are often hard to understand
+            if (substr( $randomTweet->text, 0, 1 ) === "@"){
+                continue;
+            }
+            // Dont show tweet if this user has it already rated
+            //(there is an evaluation of this tweet with this users id)
+            if (!Yii::$app->user->isGuest){
+                foreach ($randomTweet->evaluations as $evaluation ){
+                    if ($evaluation->user_id == Yii::$app->user->id){
+                        //skip this tweet
+                        //$message.="skipots tvīts #".$randomTweet->id."\n";
+                        continue 2;
+                    }
+                }
+            }
+            
+            $show = true;
         }
         
         // Request was AJAX
