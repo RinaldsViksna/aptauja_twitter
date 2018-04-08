@@ -130,8 +130,11 @@ class TweetlistController extends Controller
         }
         $response['data'] = $data;
         $fp = fopen('results.json', 'w');
-        fwrite($fp, json_encode($response));
+        $write_ok = fwrite($fp, json_encode($response));
         fclose($fp);
+        if (!$write_ok){
+            echo "file save failed \n";
+        }
     }
 
 
