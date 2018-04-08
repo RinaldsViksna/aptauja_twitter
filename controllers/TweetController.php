@@ -130,8 +130,10 @@ class TweetController extends Controller {
         // Get new tweet to display and do some checks on it
         $show = false;
         $count = 0;
+
         while ($show == false){
             $randomTweet = Tweet::getRandom();
+            $next_value = false;
             
             $count ++;
             // break loop if too many tweets are already rated
@@ -150,9 +152,14 @@ class TweetController extends Controller {
                     if ($evaluation->user_id == Yii::$app->user->id){
                         //skip this tweet
                         //$message.="skipots tvīts #".$randomTweet->id."\n";
-                        continue 2;
+                        //continue 2;
+                        $next_value = true;
+                        break;
                     }
                 }
+            }
+            if ($next_value){
+                continue;
             }
             
             $show = true;
