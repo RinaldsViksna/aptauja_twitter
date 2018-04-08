@@ -91,7 +91,48 @@ class TweetlistController extends Controller
             }
         }
     }
-
+    /**
+     * Save tweets together with evaluations in JSON for further use
+     */
+    public function actionExport(){
+        $allTweets = Tweet::find()->all();
+        $data = array();
+        $response = array();
+        $c = 0;
+        foreach ($allTweets as $tweet ){
+            $pos = 0;
+            $neg = 0;
+            $neu = 0;
+            $imp = 0;
+            $non_lv = 0;
+            foreach ($tweet->evaluations as $evaluation){
+                if ($evaluation->sentiment_id == 1){
+                    $pos++;
+                }
+                if ($evaluation->sentiment_id == 2){
+                    $neg++;
+                }
+                if ($evaluation->sentiment_id == 3){
+                    $neu++;
+                }
+                if ($evaluation->sentiment_id == 4){
+                    $imp++;
+                }
+                if ($evaluation->is_latvian == 0){
+                    $non_lv++;
+                }
+            }
+            $data[] = array('tweet_id'=> $tweet->id,'text'=> $tweet->text, 'POS'=>$pos, 'NEG'=>$neg,'NEU'=>$neu,'IMP'=>$imp,'NOT_LV'=>$non_lv);
+            $c++;
+            if ($c%100==0){
+                print (" ".$c . " \n");
+            }
+        }
+        $response['data'] = $data;
+        $fp = fopen('results.json', 'w');
+        fwrite($fp, json_encode($response));
+        fclose($fp);
+    }
 
 
     /**
